@@ -1,0 +1,184 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <script src="JSmusicalClock.js"></script>
+    <script src="metronome.js"></script>
+	<style>
+		#container{
+			width: 585px;
+			padding: 20px;
+			border: 1px solid black;
+			position: relative;
+			top:60px;
+			margin:auto;
+			background: white;
+			-webkit-user-select: none;  /* Chrome all / Safari all */
+			-moz-user-select: none;     /* Firefox all */
+			-ms-user-select: none;      /* IE 10+ */
+			-o-user-select: none;
+			user-select: none;   
+			box-shadow: 0 0 10px grey;
+
+		}
+		
+		*:focus{outline: none;}
+		
+		body{
+			background:#cbcbcb;
+		}
+		#ticksContainer{
+			display:table;
+			width: 100%;
+			border-spacing: 4px;
+			margin-top: 30px;
+		}
+		
+		.box{
+			display:table-cell;
+			width:1px;
+			height:10px;
+			background:grey;
+		}
+		
+		.box:focus{
+			background: #555555 !important;
+			opacity:.4 
+		}
+		
+		.but{
+			display:inline-block;
+			width:40%;
+			cursor:pointer;
+			text-align:center;
+			background: black;
+			color: white;
+			padding: 5px;
+			margin: 5px;
+		}
+		
+		.butsmall{
+			display: inline-block;
+			background: black;
+			color: white;
+			padding: 3px;
+			font-size: 8px;
+			height: 9px;
+			width: 8px;
+			text-align: center;
+			cursor:pointer;
+		}
+		
+	
+		#left{
+			float: left;
+			width: 310px;
+		}
+		
+		#rigth{
+			padding-left: 60px;
+			padding-top: 15px;
+			float: left;
+			width: 200px;
+		}
+		.title{
+			width: 150px;
+			display: inline-block;
+		}
+		
+		.value{
+			width: 95px;
+			text-align: center;
+			height: 19px;
+			display: inline-block;
+			vertical-align: middle;
+		}
+		
+		.beatScheduled{
+			padding: 3px;
+			width: 278px;
+			display: table;
+			background: lightgrey;
+			margin: 4px;
+			border-spacing: 4px;
+			float: left;
+			margin-bottom:10px;
+		}
+		
+		.dark{
+			background: #bcbcbc !important;
+		}
+		.light{
+			background: lightgrey !important;
+		}
+		
+		[scheduledBeat]{ background: orangered !important;}
+		[scheduledBeat]:focus{ background: red !important;}
+		
+		[pointer]{cursor:pointer; }
+				
+		[pointer]:hover { background:#444444 !important; }
+		
+		[scheduledBeat][pointer]:hover{ background:red !important; }
+		
+		[active]{ 
+			background: #555555 !important;
+			opacity:.4 
+		}
+
+		
+		.clear{clear:both}
+	</style>
+  </head>
+  <body>
+   <div id="container">
+		<div id="left">
+			<div class="but" onclick="start()">start</div>
+			<div class="but" onclick="stop()">stop</div>
+			<br/>
+			<br/>
+			<div class="title">Tempo:</div>  
+				<div class="butsmall" onclick="tempoModifier(-10)">-</div>	
+				<span class="value" id="tempo">***</span> 
+				<div class="butsmall" onclick="tempoModifier(10)">+</div>
+				
+			<div class="title">Time signature:</div> 
+				<div class="butsmall" onclick="timeSignatureModifier(-1)">-</div>	
+				<span class="value" id="timeSignature">***</span>
+				<div class="butsmall" onclick="timeSignatureModifier(1)">+</div>
+			
+			<div class="title">Beat resolution:  :</div> 
+				<div class="butsmall" onclick="beatResolutionLevelModifier(-1)">-</div> 	
+				<span class="value" id="ticksInBeat">***</span> 		
+				<div class="butsmall"  onclick="beatResolutionLevelModifier(1)">+</div>
+			
+			<div class="title">Measures:  :</div> 
+				<div class="butsmall" onclick="measuresModifier(-1)">-</div> 	
+				<span class="value" id="measures">1</span> 		
+				<div class="butsmall"  onclick="measuresModifier(1)">+</div>
+				
+			<div class="title">Metronome:  :</div> 
+				<div class="butsmall" onclick="metronomeSwitch()">-</div> 	
+				<span class="value" id="metronome">on</span> 		
+				<div class="butsmall"  onclick="metronomeSwitch()">+</div>
+		</div>
+		<div id="rigth">
+			<div>Current Tick: <span id="currentTick"></span></div>
+			<div>Current Time: <span id="currentTime"></span></div>
+			<br/>
+			<div>Current SubBeat: <span id="currentBeatSubdivision"></span></div>
+			<div>Current Beat: <span id="currentBeatInBar"></span></div>
+			<div>Current Bar: <span id="currentBar"></span></div>
+			<br/>
+		</div>
+		<div class="clear"></div>
+
+		<div id="ticksContainer"></div>
+		<br/>
+		<div id="scheduledTicksContainer"></div>
+		<div class="clear"></div>
+		
+   </div>
+   </body>
+   
+</html>
